@@ -1,0 +1,167 @@
+команда ==== вывод
+1. curl -X POST http://127.0.0.1:8000/increment ==== {"greeting": "Hello, Docker!ф", "count": 1, "hostname": "1a6f92a97699", "storage": "redis"}%   
+2. curl -X POST http://127.0.0.1:8000/increment ==== {"greeting": "Hello, Docker!ф", "count": 2, "hostname": "1a6f92a97699", "storage": "redis"}%   
+3. curl http://127.0.0.1:8000/ ==== {"greeting": "Hello, Docker!ф", "count": 2, "hostname": "1a6f92a97699", "storage": "redis"}%   
+4. docker compose down ==== 
+[+] down 3/3
+ ✔ Container hw_3_perek-app-1   Removed                                                                                               3.1s
+ ✔ Container hw_3_perek-redis-1 Removed                                                                                               0.1s
+ ✔ Network hw_3_perek_default   Removed     
+
+5. docker compose up -d  ====
+[+] up 3/3
+ ✔ Network hw_3_perek_default   Created                                                                                               0.0s
+ ✔ Container hw_3_perek-redis-1 Healthy                                                                                               3.6s
+ ✔ Container hw_3_perek-app-1   Started  
+
+ 6. curl http://127.0.0.1:8000/ ==== {"greeting": "Hello, Docker!", "count": 2, "hostname": "b964b4c5bbd5", "storage": "redis"}%   
+ 7.  docker compose stop redis ==== 
+ [+] stop 1/1
+ ✔ Container hw_3_perek-redis-1 Stopped  
+
+ 8. curl http://127.0.0.1:8000/healthz ==== {"status": "alive"}%     
+ 9. curl http://127.0.0.1:8000/readyz ==== {"error": "storage_unavailable"}%   
+10. curl -X POST http://127.0.0.1:8000/increment ==== {"error": "storage_unavailable"}%  
+11. docker compose start redis ====
+[+] start 1/1
+ ✔ Container hw_3_perek-redis-1 Started  
+
+ 12.  curl http://127.0.0.1:8000/ ==== {"greeting": "Hello, Docker!", "count": 2, "hostname": "b964b4c5bbd5", "storage": "redis"}%
+ 13. curl -X POST http://127.0.0.1:8000/increment ==== {"greeting": "Hello, Docker!", "count": 3, "hostname": "b964b4c5bbd5", "storage": "redis"}%  
+ 14. curl http://127.0.0.1:8000/ ====  {"greeting": "Hello, Docker!", "count": 3, "hostname": "b964b4c5bbd5", "storage": "redis"}%  
+ 
+
+логи
+app-1  | 2026-11-23 16:46:09,965 listening port=8000 storage=redis
+app-1  | 2026-11-23 16:46:12,888 http 127.0.0.1 "GET /healthz HTTP/1.1" 200 -
+app-1  | 2026-11-23 16:46:17,956 http 127.0.0.1 "GET /healthz HTTP/1.1" 200 -
+app-1  | 2026-11-23 16:46:23,021 http 127.0.0.1 "GET /healthz HTTP/1.1" 200 -
+app-1  | 2026-11-23 16:46:28,091 http 127.0.0.1 "GET /healthz HTTP/1.1" 200 -
+app-1  | 2026-11-23 16:46:33,162 http 127.0.0.1 "GET /healthz HTTP/1.1" 200 -
+app-1  | 2026-11-23 16:46:38,214 http 127.0.0.1 "GET /healthz HTTP/1.1" 200 -
+app-1  | 2026-11-23 16:46:43,279 http 127.0.0.1 "GET /healthz HTTP/1.1" 200 -
+app-1  | 2026-11-23 16:46:45,060 http 192.168.65.1 "GET / HTTP/1.1" 200 -
+app-1  | 2026-11-23 16:46:48,346 http 127.0.0.1 "GET /healthz HTTP/1.1" 200 -
+app-1  | 2026-11-23 16:46:53,413 http 127.0.0.1 "GET /healthz HTTP/1.1" 200 -
+app-1  | 2026-11-23 16:46:58,479 http 127.0.0.1 "GET /healthz HTTP/1.1" 200 -
+app-1  | 2026-11-23 16:47:03,545 http 127.0.0.1 "GET /healthz HTTP/1.1" 200 -
+app-1  | 2026-11-23 16:47:08,612 http 127.0.0.1 "GET /healthz HTTP/1.1" 200 -
+app-1  | 2026-11-23 16:47:13,676 http 127.0.0.1 "GET /healthz HTTP/1.1" 200 -
+app-1  | 2026-11-23 16:47:18,745 http 127.0.0.1 "GET /healthz HTTP/1.1" 200 -
+app-1  | 2026-11-23 16:47:23,811 http 127.0.0.1 "GET /healthz HTTP/1.1" 200 -
+app-1  | 2026-11-23 16:47:28,879 http 127.0.0.1 "GET /healthz HTTP/1.1" 200 -
+app-1  | 2026-11-23 16:47:33,944 http 127.0.0.1 "GET /healthz HTTP/1.1" 200 -
+app-1  | 2026-11-23 16:47:39,014 http 127.0.0.1 "GET /healthz HTTP/1.1" 200 -
+app-1  | 2026-11-23 16:47:44,084 http 127.0.0.1 "GET /healthz HTTP/1.1" 200 -
+app-1  | 2026-11-23 16:47:49,152 http 127.0.0.1 "GET /healthz HTTP/1.1" 200 -
+app-1  | 2026-11-23 16:47:54,220 http 127.0.0.1 "GET /healthz HTTP/1.1" 200 -
+app-1  | 2026-11-23 16:47:56,032 http 192.168.65.1 "GET /healthz HTTP/1.1" 200 -
+app-1  | 2026-11-23 16:47:59,287 http 127.0.0.1 "GET /healthz HTTP/1.1" 200 -
+app-1  | 2026-11-23 16:48:04,355 http 127.0.0.1 "GET /healthz HTTP/1.1" 200 -
+app-1  | 2026-11-23 16:48:09,426 http 127.0.0.1 "GET /healthz HTTP/1.1" 200 -
+app-1  | 2026-11-23 16:48:14,492 http 127.0.0.1 "GET /healthz HTTP/1.1" 200 -
+app-1  | 2026-11-23 16:48:14,831 storage_unavailable: ConnectionError
+app-1  | 2026-11-23 16:48:14,831 http 192.168.65.1 "GET /readyz HTTP/1.1" 503 -
+app-1  | 2026-11-23 16:48:19,556 http 127.0.0.1 "GET /healthz HTTP/1.1" 200 -
+app-1  | 2026-11-23 16:48:24,623 http 127.0.0.1 "GET /healthz HTTP/1.1" 200 -
+app-1  | 2026-11-23 16:48:29,683 http 127.0.0.1 "GET /healthz HTTP/1.1" 200 -
+app-1  | 2026-11-23 16:48:34,753 http 127.0.0.1 "GET /healthz HTTP/1.1" 200 -
+app-1  | 2026-11-23 16:48:39,822 http 127.0.0.1 "GET /healthz HTTP/1.1" 200 -
+app-1  | 2026-11-23 16:48:44,890 http 127.0.0.1 "GET /healthz HTTP/1.1" 200 -
+app-1  | 2026-11-23 16:48:49,936 http 127.0.0.1 "GET /healthz HTTP/1.1" 200 -
+app-1  | 2026-11-23 16:48:55,000 http 127.0.0.1 "GET /healthz HTTP/1.1" 200 -
+app-1  | 2026-11-23 16:49:00,065 http 127.0.0.1 "GET /healthz HTTP/1.1" 200 -
+app-1  | 2026-11-23 16:49:05,131 http 127.0.0.1 "GET /healthz HTTP/1.1" 200 -
+app-1  | 2026-11-23 16:49:10,197 http 127.0.0.1 "GET /healthz HTTP/1.1" 200 -
+app-1  | 2026-11-23 16:49:15,261 http 127.0.0.1 "GET /healthz HTTP/1.1" 200 -
+app-1  | 2026-11-23 16:49:20,331 http 127.0.0.1 "GET /healthz HTTP/1.1" 200 -
+app-1  | 2026-11-23 16:49:25,397 http 127.0.0.1 "GET /healthz HTTP/1.1" 200 -
+app-1  | 2026-11-23 16:49:29,955 storage_unavailable: ConnectionError
+app-1  | 2026-11-23 16:49:29,955 http 192.168.65.1 "POST /increment HTTP/1.1" 503 -
+app-1  | 2026-11-23 16:49:30,467 http 127.0.0.1 "GET /healthz HTTP/1.1" 200 -
+app-1  | 2026-11-23 16:49:35,536 http 127.0.0.1 "GET /healthz HTTP/1.1" 200 -
+app-1  | 2026-11-23 16:49:40,606 http 127.0.0.1 "GET /healthz HTTP/1.1" 200 -
+app-1  | 2026-11-23 16:49:45,675 http 127.0.0.1 "GET /healthz HTTP/1.1" 200 -
+app-1  | 2026-11-23 16:49:50,744 http 127.0.0.1 "GET /healthz HTTP/1.1" 200 -
+app-1  | 2026-11-23 16:49:55,817 http 127.0.0.1 "GET /healthz HTTP/1.1" 200 -
+app-1  | 2026-11-23 16:50:00,889 http 127.0.0.1 "GET /healthz HTTP/1.1" 200 -
+app-1  | 2026-11-23 16:50:05,953 http 127.0.0.1 "GET /healthz HTTP/1.1" 200 -
+app-1  | 2026-11-23 16:50:11,018 http 127.0.0.1 "GET /healthz HTTP/1.1" 200 -
+app-1  | 2026-11-23 16:50:16,077 http 127.0.0.1 "GET /healthz HTTP/1.1" 200 -
+app-1  | 2026-11-23 16:50:21,139 http 127.0.0.1 "GET /healthz HTTP/1.1" 200 -
+app-1  | 2026-11-23 16:50:26,209 http 127.0.0.1 "GET /healthz HTTP/1.1" 200 -
+app-1  | 2026-11-23 16:50:31,275 http 127.0.0.1 "GET /healthz HTTP/1.1" 200 -
+app-1  | 2026-11-23 16:50:36,346 http 127.0.0.1 "GET /healthz HTTP/1.1" 200 -
+app-1  | 2026-11-23 16:50:41,414 http 127.0.0.1 "GET /healthz HTTP/1.1" 200 -
+app-1  | 2026-11-23 16:50:46,481 http 127.0.0.1 "GET /healthz HTTP/1.1" 200 -
+app-1  | 2026-11-23 16:50:51,546 http 127.0.0.1 "GET /healthz HTTP/1.1" 200 -
+app-1  | 2026-11-23 16:50:56,600 http 127.0.0.1 "GET /healthz HTTP/1.1" 200 -
+app-1  | 2026-11-23 16:51:00,146 http 192.168.65.1 "GET / HTTP/1.1" 200 -
+app-1  | 2026-11-23 16:51:01,662 http 127.0.0.1 "GET /healthz HTTP/1.1" 200 -
+app-1  | 2026-11-23 16:51:06,733 http 127.0.0.1 "GET /healthz HTTP/1.1" 200 -
+app-1  | 2026-11-23 16:51:11,791 http 127.0.0.1 "GET /healthz HTTP/1.1" 200 -
+app-1  | 2026-11-23 16:51:16,856 http 127.0.0.1 "GET /healthz HTTP/1.1" 200 -
+app-1  | 2026-11-23 16:51:21,925 http 127.0.0.1 "GET /healthz HTTP/1.1" 200 -
+app-1  | 2026-11-23 16:51:25,645 http 192.168.65.1 "POST /increment HTTP/1.1" 200 -
+app-1  | 2026-11-23 16:51:26,995 http 127.0.0.1 "GET /healthz HTTP/1.1" 200 -
+app-1  | 2026-11-23 16:51:32,067 http 127.0.0.1 "GET /healthz HTTP/1.1" 200 -
+app-1  | 2026-11-23 16:51:37,141 http 127.0.0.1 "GET /healthz HTTP/1.1" 200 -
+app-1  | 2026-11-23 16:51:42,214 http 127.0.0.1 "GET /healthz HTTP/1.1" 200 -
+app-1  | 2026-11-23 16:51:47,279 http 127.0.0.1 "GET /healthz HTTP/1.1" 200 -
+app-1  | 2026-11-23 16:51:50,353 http 192.168.65.1 "GET / HTTP/1.1" 200 -
+app-1  | 2026-11-23 16:51:52,342 http 127.0.0.1 "GET /healthz HTTP/1.1" 200 -
+app-1  | 2026-11-23 16:51:57,411 http 127.0.0.1 "GET /healthz HTTP/1.1" 200 -
+app-1  | 2026-11-23 16:52:02,478 http 127.0.0.1 "GET /healthz HTTP/1.1" 200 -
+app-1  | 2026-11-23 16:52:07,547 http 127.0.0.1 "GET /healthz HTTP/1.1" 200 -
+app-1  | 2026-11-23 16:52:12,615 http 127.0.0.1 "GET /healthz HTTP/1.1" 200 -
+app-1  | 2026-11-23 16:52:17,681 http 127.0.0.1 "GET /healthz HTTP/1.1" 200 -
+app-1  | 2026-11-23 16:52:22,753 http 127.0.0.1 "GET /healthz HTTP/1.1" 200 -
+app-1  | 2026-11-23 16:52:27,818 http 127.0.0.1 "GET /healthz HTTP/1.1" 200 -
+app-1  | 2026-11-23 16:52:32,874 http 127.0.0.1 "GET /healthz HTTP/1.1" 200 -
+app-1  | 2026-11-23 16:52:37,941 http 127.0.0.1 "GET /healthz HTTP/1.1" 200 -
+app-1  | 2026-11-23 16:52:43,003 http 127.0.0.1 "GET /healthz HTTP/1.1" 200 -
+app-1  | 2026-11-23 16:52:48,072 http 127.0.0.1 "GET /healthz HTTP/1.1" 200 -
+app-1  | 2026-11-23 16:52:53,135 http 127.0.0.1 "GET /healthz HTTP/1.1" 200 -
+app-1  | 2026-11-23 16:52:58,204 http 127.0.0.1 "GET /healthz HTTP/1.1" 200 -
+app-1  | 2026-11-23 16:53:03,270 http 127.0.0.1 "GET /healthz HTTP/1.1" 200 -
+app-1  | 2026-11-23 16:53:08,331 http 127.0.0.1 "GET /healthz HTTP/1.1" 200 -
+redis-1  | 1:C 23 Nov 2026 16:46:06.304 * oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+redis-1  | 1:C 23 Nov 2026 16:46:06.304 * Redis version=7.4.12, bits=64, commit=00000000, modified=0, pid=1, just started
+redis-1  | 1:C 23 Nov 2026 16:46:06.304 * Configuration loaded
+redis-1  | 1:M 23 Nov 2026 16:46:06.304 * monotonic clock: POSIX clock_gettime
+redis-1  | 1:M 23 Nov 2026 16:46:06.305 * Running mode=standalone, port=6379.
+redis-1  | 1:M 23 Nov 2026 16:46:06.305 * Server initialized
+redis-1  | 1:M 23 Nov 2026 16:46:06.305 * Reading RDB base file on AOF loading...
+redis-1  | 1:M 23 Nov 2026 16:46:06.305 * Loading RDB produced by version 7.4.12
+redis-1  | 1:M 23 Nov 2026 16:46:06.305 * RDB age 2103 seconds
+redis-1  | 1:M 23 Nov 2026 16:46:06.305 * RDB memory usage when created 0.94 Mb
+redis-1  | 1:M 23 Nov 2026 16:46:06.305 * RDB is base AOF
+redis-1  | 1:M 23 Nov 2026 16:46:06.305 * Done loading RDB, keys loaded: 0, keys expired: 0.
+redis-1  | 1:M 23 Nov 2026 16:46:06.305 * DB loaded from base file appendonly.aof.1.base.rdb: 0.000 seconds
+redis-1  | 1:M 23 Nov 2026 16:46:06.306 * DB loaded from incr file appendonly.aof.1.incr.aof: 0.001 seconds
+redis-1  | 1:M 23 Nov 2026 16:46:06.306 * DB loaded from append only file: 0.001 seconds
+redis-1  | 1:M 23 Nov 2026 16:46:06.306 * Opening AOF incr file appendonly.aof.1.incr.aof on server start
+redis-1  | 1:M 23 Nov 2026 16:46:06.306 * Ready to accept connections tcp
+redis-1  | 1:signal-handler (1795452450) Received SIGTERM scheduling shutdown...
+redis-1  | 1:M 23 Nov 2026 16:47:30.026 * User requested shutdown...
+redis-1  | 1:M 23 Nov 2026 16:47:30.026 * Calling fsync() on the AOF file.
+redis-1  | 1:M 23 Nov 2026 16:47:30.026 * Saving the final RDB snapshot before exiting.
+redis-1  | 1:M 23 Nov 2026 16:47:30.027 * DB saved on disk
+redis-1  | 1:M 23 Nov 2026 16:47:30.027 # Redis is now ready to exit, bye bye...
+redis-1  | 1:C 23 Nov 2026 16:50:44.413 * oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+redis-1  | 1:C 23 Nov 2026 16:50:44.413 * Redis version=7.4.12, bits=64, commit=00000000, modified=0, pid=1, just started
+redis-1  | 1:C 23 Nov 2026 16:50:44.413 * Configuration loaded
+redis-1  | 1:M 23 Nov 2026 16:50:44.413 * monotonic clock: POSIX clock_gettime
+redis-1  | 1:M 23 Nov 2026 16:50:44.414 * Running mode=standalone, port=6379.
+redis-1  | 1:M 23 Nov 2026 16:50:44.414 * Server initialized
+redis-1  | 1:M 23 Nov 2026 16:50:44.414 * Reading RDB base file on AOF loading...
+redis-1  | 1:M 23 Nov 2026 16:50:44.414 * Loading RDB produced by version 7.4.12
+redis-1  | 1:M 23 Nov 2026 16:50:44.414 * RDB age 2381 seconds
+redis-1  | 1:M 23 Nov 2026 16:50:44.414 * RDB memory usage when created 0.94 Mb
+redis-1  | 1:M 23 Nov 2026 16:50:44.414 * RDB is base AOF
+redis-1  | 1:M 23 Nov 2026 16:50:44.414 * Done loading RDB, keys loaded: 0, keys expired: 0.
+redis-1  | 1:M 23 Nov 2026 16:50:44.414 * DB loaded from base file appendonly.aof.1.base.rdb: 0.000 seconds
+redis-1  | 1:M 23 Nov 2026 16:50:44.414 * DB loaded from incr file appendonly.aof.1.incr.aof: 0.000 seconds
+redis-1  | 1:M 23 Nov 2026 16:50:44.414 * DB loaded from append only file: 0.000 seconds
+redis-1  | 1:M 23 Nov 2026 16:50:44.414 * Opening AOF incr file appendonly.aof.1.incr.aof on server start
+redis-1  | 1:M 23 Nov 2026 16:50:44.414 * Ready to accept connections tcp
