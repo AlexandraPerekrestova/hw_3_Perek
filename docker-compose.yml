@@ -1,0 +1,14 @@
+services:
+  app:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      GREETING: Hello, Docker!
+    volumes:
+      - counter-data:/data
+
+
+volumes:
+  counter-data:
+
